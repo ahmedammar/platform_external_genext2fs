@@ -14,8 +14,8 @@ define build-userimage-ext2-target
 	$(MKEXT2IMG) -a -d $(1) -b $$num_blocks -N $$num_inodes -m 0 $(2);
 	$(if $(strip $(3)),\
 		$(hide) $(TUNE2FS) -L $(strip $(3)) $(2))
-	$(if $(strip $(4)),\
-		$(hide) $(TUNE2FS) -j $(2))
+	$(TUNE2FS) -j $(2)
+	$(TUNE2FS) -O extents,uninit_bg,dir_index $(2)
 	$(TUNE2FS) -C 1 $(2)
-	$(E2FSCK) -fy $(2) ; [ $$? -lt 4 ]
+	$(E2FSCK) -fyD $(2) ; [ $$? -lt 4 ]
 endef
