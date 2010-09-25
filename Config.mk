@@ -15,7 +15,7 @@ define build-userimage-ext2-target
 	$(if $(strip $(3)),\
 		$(hide) $(TUNE2FS) -L $(strip $(3)) $(2))
 	$(TUNE2FS) -j $(2)
-	$(TUNE2FS) -O extents,uninit_bg,dir_index $(2)
+	$(TUNE2FS) -O uninit_bg,dir_index $(2)
 	$(TUNE2FS) -C 1 $(2)
 	$(E2FSCK) -fyD $(2) ; [ $$? -lt 4 ]
 endef
